@@ -1,0 +1,40 @@
+package biblioteca;
+
+public class Libro {
+
+    private final String codigo;
+    private final String titulo;
+    private final String autor;
+    private boolean prestado;
+
+    public Libro(String codigo, String titulo, String autor) {
+        this.codigo = codigo.trim();
+        this.titulo = titulo.trim();
+        this.autor = autor.trim();
+        this.prestado = false;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public boolean isPrestado() {
+        return prestado;
+    }
+
+    public void setPrestado(boolean prestado) {
+        this.prestado = prestado;
+    }
+
+    public String getEstado() {
+        return prestado ? "Prestado" : "Disponible";
+    }
+}
