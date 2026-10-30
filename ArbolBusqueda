@@ -1,0 +1,62 @@
+package biblioteca;
+
+public class ArbolBusqueda {
+
+    private static class Nodo {
+        Libro libro;
+        Nodo izquierda;
+        Nodo derecha;
+
+        Nodo(Libro libro) {
+            this.libro = libro;
+        }
+    }
+
+    private Nodo raiz;
+
+    public void insertar(Libro libro) {
+        raiz = insertarRec(raiz, libro);
+    }
+
+    private Nodo insertarRec(Nodo actual, Libro libro) {
+        if (actual == null) {
+            return new Nodo(libro);
+        }
+
+        int comparacion = libro.getCodigo()
+                .compareToIgnoreCase(actual.libro.getCodigo());
+
+        if (comparacion < 0) {
+            actual.izquierda =
+                    insertarRec(actual.izquierda, libro);
+        } else if (comparacion > 0) {
+            actual.derecha =
+                    insertarRec(actual.derecha, libro);
+        }
+
+        return actual;
+    }
+
+    public Libro buscar(String codigo) {
+        return buscarRec(raiz, codigo.trim());
+    }
+
+    private Libro buscarRec(Nodo actual, String codigo) {
+        if (actual == null) {
+            return null;
+        }
+
+        int comparacion = codigo.compareToIgnoreCase(
+                actual.libro.getCodigo());
+
+        if (comparacion == 0) {
+            return actual.libro;
+        }
+
+        if (comparacion < 0) {
+            return buscarRec(actual.izquierda, codigo);
+        }
+
+        return buscarRec(actual.derecha, codigo);
+    }
+}
