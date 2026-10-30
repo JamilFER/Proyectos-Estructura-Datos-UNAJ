@@ -1,0 +1,71 @@
+package biblioteca;
+
+public class ListaLibros {
+
+    private static class Nodo {
+        Libro libro;
+        Nodo siguiente;
+
+        Nodo(Libro libro) {
+            this.libro = libro;
+        }
+    }
+
+    private Nodo cabeza;
+    private int cantidad;
+
+    public void agregar(Libro libro) {
+        Nodo nuevo = new Nodo(libro);
+
+        if (cabeza == null) {
+            cabeza = nuevo;
+        } else {
+            Nodo actual = cabeza;
+
+            while (actual.siguiente != null) {
+                actual = actual.siguiente;
+            }
+
+            actual.siguiente = nuevo;
+        }
+
+        cantidad++;
+    }
+
+    public Libro buscar(String codigo) {
+        Nodo actual = cabeza;
+
+        while (actual != null) {
+            if (actual.libro.getCodigo()
+                    .equalsIgnoreCase(codigo.trim())) {
+                return actual.libro;
+            }
+
+            actual = actual.siguiente;
+        }
+
+        return null;
+    }
+
+    public boolean contieneCodigo(String codigo) {
+        return buscar(codigo) != null;
+    }
+
+    public Libro[] obtenerTodos() {
+        Libro[] libros = new Libro[cantidad];
+        Nodo actual = cabeza;
+        int i = 0;
+
+        while (actual != null) {
+            libros[i] = actual.libro;
+            i++;
+            actual = actual.siguiente;
+        }
+
+        return libros;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+}
