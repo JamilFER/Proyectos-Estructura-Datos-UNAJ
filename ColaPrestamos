@@ -1,0 +1,76 @@
+package biblioteca;
+
+public class ColaPrestamos {
+
+    private static class Nodo {
+        String codigoLibro;
+        String solicitante;
+        Nodo siguiente;
+
+        Nodo(String codigoLibro, String solicitante) {
+            this.codigoLibro = codigoLibro;
+            this.solicitante = solicitante;
+        }
+    }
+
+    private Nodo frente;
+    private Nodo fin;
+    private int cantidad;
+
+    public void encolar(String codigoLibro, String solicitante) {
+        Nodo nuevo = new Nodo(
+                codigoLibro.trim(),
+                solicitante.trim());
+
+        if (fin == null) {
+            frente = nuevo;
+            fin = nuevo;
+        } else {
+            fin.siguiente = nuevo;
+            fin = nuevo;
+        }
+
+        cantidad++;
+    }
+
+    public Solicitud desencolar() {
+        if (frente == null) {
+            return null;
+        }
+
+        Solicitud solicitud = new Solicitud(
+                frente.codigoLibro,
+                frente.solicitante);
+
+        frente = frente.siguiente;
+
+        if (frente == null) {
+            fin = null;
+        }
+
+        cantidad--;
+        return solicitud;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public static class Solicitud {
+        private final String codigoLibro;
+        private final String solicitante;
+
+        public Solicitud(String codigoLibro, String solicitante) {
+            this.codigoLibro = codigoLibro;
+            this.solicitante = solicitante;
+        }
+
+        public String getCodigoLibro() {
+            return codigoLibro;
+        }
+
+        public String getSolicitante() {
+            return solicitante;
+        }
+    }
+}
